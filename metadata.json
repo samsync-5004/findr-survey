@@ -1,0 +1,7 @@
+{
+  "name": "Findr Validation Survey",
+  "description": "Full-stack Findr Validation Survey form and analytics dashboard built with React, Tailwind CSS, and Firebase Firestore/Auth.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
