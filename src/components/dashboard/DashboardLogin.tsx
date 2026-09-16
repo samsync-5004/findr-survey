@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../lib/firebase';
-import { Lock, Mail, KeyRound, ArrowRight, ArrowLeft } from 'lucide-react';
+import { Lock, Mail, KeyRound, ArrowRight, ArrowLeft, Sun, Moon } from 'lucide-react';
 
 interface DashboardLoginProps {
   onBackToSurvey: () => void;
   onLoginSuccess: () => void;
+  isDarkMode: boolean;
+  onToggleTheme: () => void;
 }
 
-export default function DashboardLogin({ onBackToSurvey, onLoginSuccess }: DashboardLoginProps) {
+export default function DashboardLogin({ onBackToSurvey, onLoginSuccess, isDarkMode, onToggleTheme }: DashboardLoginProps) {
   const [email, setEmail] = useState<string>('samuelolami5004@gmail.com');
   const [password, setPassword] = useState<string>('Samuel@5004');
   const [error, setError] = useState<string>('');
@@ -58,9 +60,18 @@ export default function DashboardLogin({ onBackToSurvey, onLoginSuccess }: Dashb
             <ArrowLeft className="w-4 h-4" />
             <span>Back to Survey</span>
           </button>
-          <span className="px-2.5 py-0.5 rounded-full bg-secondary-container text-on-secondary-container text-[10px] font-bold uppercase tracking-wider">
-            Admin Access
-          </span>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={onToggleTheme}
+              className="w-8 h-8 rounded-xl bg-surface-container text-on-surface flex items-center justify-center hover:bg-surface-container-high transition-colors cursor-pointer"
+              title="Toggle dark/light mode"
+            >
+              {isDarkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-700" />}
+            </button>
+            <span className="px-2.5 py-0.5 rounded-full bg-secondary-container text-on-secondary-container text-[10px] font-bold uppercase tracking-wider">
+              Admin Access
+            </span>
+          </div>
         </div>
 
         <div className="space-y-2 text-center">

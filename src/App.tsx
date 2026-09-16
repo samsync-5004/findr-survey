@@ -8,6 +8,21 @@ import { onAuthStateChanged, signOut } from 'firebase/auth';
 export default function App() {
   const [view, setView] = useState<'survey' | 'dashboard-login' | 'dashboard-overview'>('survey');
   const [currentUser, setCurrentUser] = useState<any>(null);
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
+    return localStorage.getItem('findr_theme') === 'dark';
+  });
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('findr_theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('findr_theme', 'light');
+    }
+  }, [isDarkMode]);
+
+  const toggleTheme = () => setIsDarkMode(prev => !prev);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, user => {
@@ -43,13 +58,19 @@ export default function App() {
   return (
     <div className="min-h-screen bg-surface font-body-md text-on-surface flex flex-col">
       {view === 'survey' && (
-        <SurveyForm onSwitchToDashboard={handleSwitchToDashboard} />
+        <SurveyForm 
+          onSwitchToDashboard={handleSwitchToDashboard} 
+          isDarkMode={isDarkMode}
+          onToggleTheme={toggleTheme}
+        />
       )}
 
       {view === 'dashboard-login' && (
         <DashboardLogin
           onBackToSurvey={() => setView('survey')}
           onLoginSuccess={handleLoginSuccess}
+          isDarkMode={isDarkMode}
+          onToggleTheme={toggleTheme}
         />
       )}
 
@@ -57,6 +78,8 @@ export default function App() {
         <DashboardOverview
           onLogout={handleLogout}
           onBackToSurvey={() => setView('survey')}
+          isDarkMode={isDarkMode}
+          onToggleTheme={toggleTheme}
         />
       )}
     </div>

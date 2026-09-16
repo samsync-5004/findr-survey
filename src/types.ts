@@ -33,6 +33,7 @@ export interface SurveyFormData {
 
 export interface SurveyResponseDocument extends SurveyFormData {
   id?: string;
+  completed?: boolean;
   submittedAt: any; // Firestore Timestamp or Date
   scores: {
     desirabilityScore: number;
